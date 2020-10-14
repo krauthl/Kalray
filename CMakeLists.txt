@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.17)
+project(Kalray C)
+
+set(CMAKE_C_STANDARD 99)
+
+find_package(PNG REQUIRED)
+include_directories(${PNG_INCLUDE_DIR})
+
+add_executable(Kalray png_transform.c)
+target_link_libraries(Kalray ${PNG_LIBRARY})
