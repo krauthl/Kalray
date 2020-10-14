@@ -5,5 +5,9 @@ Function process_file :
     should be the case where the file is not RGBA type
     - problem with y : must be < heigh
 
+Optimization :
+    - 1 "for" instead of 2 identicals -> we go through the list only once
+
 TODO : check valgrind
+TODO : add automated tests
 
