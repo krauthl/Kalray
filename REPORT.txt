@@ -1,0 +1,9 @@
+CMakelists to compile
+
+Function process_file :
+    - problem with the first condition -> formatting problem : adding parenthesis avoids to always get on the "return 1" line. Return 1
+    should be the case where the file is not RGBA type
+    - problem with y : must be < heigh
+
+TODO : check valgrind
+

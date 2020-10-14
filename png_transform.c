@@ -157,14 +157,18 @@ process_file(struct decoded_image *img)
 {
 	printf("Checking PNG format\n");
 
-	if (png_get_color_type(img->png_ptr, img->info_ptr) != PNG_COLOR_TYPE_RGBA)
-		printf("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (%d) (is %d)", PNG_COLOR_TYPE_RGBA, png_get_color_type(img->png_ptr, img->info_ptr));
-		return 1;
+	if (png_get_color_type(img->png_ptr, img->info_ptr) != PNG_COLOR_TYPE_RGBA) {
+        printf("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (%d) (is %d)", PNG_COLOR_TYPE_RGBA,
+               png_get_color_type(img->png_ptr, img->info_ptr));
+        return 1; //Problem 1
+    }
+
+	//TODO optimize for !
 
 	printf("Starting processing\n");
 	for (x = 0; x < img->w; x++)
 	  {
-	  for (y = 0; y < img->w; y++)
+	  for (y = 0; y < img->h; y++) //Problem 2
 	    {
 	      png_byte *row = img->row_pointers[y];
 	      png_byte *ptr = &(row[x * 4]);
@@ -174,7 +178,7 @@ process_file(struct decoded_image *img)
 	  }
 
 	for (x = 0; x < img->w; x++) {
-		for (y = 0; y < img->w; y++) {
+		for (y = 0; y < img->h; y++) { //Problem 2
 			png_byte *row = img->row_pointers[y];
 			png_byte *ptr = &(row[x * 4]);
 			/* Then set green value to the blue one */
@@ -187,7 +191,6 @@ process_file(struct decoded_image *img)
 
 	return 0;
 }
-
 
 
 int
