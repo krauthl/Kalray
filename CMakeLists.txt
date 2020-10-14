@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(Kalray C)
+project(Kalray)
 
 set(CMAKE_C_STANDARD 99)
 

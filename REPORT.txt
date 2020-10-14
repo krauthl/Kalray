@@ -1,13 +1,41 @@
-CMakelists to compile
+=============== Lucille Krauth, Kalray test ========================
 
-Function process_file :
-    - problem with the first condition -> formatting problem : adding parenthesis avoids to always get on the "return 1" line. Return 1
-    should be the case where the file is not RGBA type
-    - problem with y : must be < heigh
+A CMakelists.txt was first added to compile the program. To compile, use the following instructions on commandline
+(at the root of the project):
+mkdir build
+cd build
+cmake ..
+make
 
-Optimization :
-    - 1 "for" instead of 2 identicals -> we go through the list only once
+2 problems to solve to make the first transformation work :
+    - In the function "process_file" > formatting problem : adding parenthesis avoids to always get on the "return 1" line (which should
+    only happen when the file is not RGBA type)
+    - Segfault problems in the same function : the variable y should be inferior to the height h (instead of the width w). It caused the
+    program to look for pixels that doesn't exist
 
-TODO : check valgrind
-TODO : add automated tests
 
+To add the new transformation feature, I made the choice to add 3 more arguments (representing the weighted transformation).
+If you don't add this 3 arguments, the program will use the old transformation.
+The weighted transformation is represented by a struct "png_transformation", which stays a null pointer in case of an old transformation, and
+is freed at the end of "process file"
+
+
+Optimizations :
+    - In the function "process_file", the program is going through the list of pixels two times, but it could be done by going through the list only once
+    - Check for memory leaks : the pointer "img" created in the main function was never freed. A call to free was added at the end.
+
+
+Other possible optimization (not implemented) : On huge pictures, it's possible to make the choice to make the program goes faster by reducing picture
+quality. Instead of taking the pixels one by one, it's possible to make groups of pixels, and consider it as one unique pixel. For example, you can take
+4 pixels like 1, 2, 3 and 4 :
+---------
+| 1 | 2 |
+---------
+| 3 | 4 |
+---------
+Then you can chose not to read the value of 2, 3 and 4, and instead to only apply the transformation to pixel 1, and only write in the output file
+the value of pixel 1.
+It's a quality loss, but it can make the process go faster.
+
+
+Tests : I added in the script "test.sh" command lines to compile the project and test different scenarios

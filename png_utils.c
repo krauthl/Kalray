@@ -150,7 +150,10 @@ int process_file(struct decoded_image *img, struct png_transformation *transform
     printf("Processing done\n");
 
     png_destroy_read_struct(&img->png_ptr, &img->info_ptr, NULL);
-    free(transformation);
+
+    if (transformation){
+        free(transformation);
+    }
 
     return 0;
 }

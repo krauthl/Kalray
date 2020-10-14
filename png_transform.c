@@ -15,12 +15,13 @@ int main(int argc, char **argv){
 
 	if (argc == 3 || argc == 6){
         struct decoded_image *img = malloc(sizeof(struct decoded_image));
-        struct png_transformation *transformation = malloc(sizeof(struct png_transformation));
+        struct png_transformation *transformation = NULL;
 
         printf("Reading input PNG\n");
         read_png_file(argv[1], img);
 
         if (argc > 3){
+            transformation = malloc(sizeof(struct png_transformation));
             transformation->red = atof(argv[3]);
             transformation->green = atof(argv[4]);
             transformation->blue = atof(argv[5]);
